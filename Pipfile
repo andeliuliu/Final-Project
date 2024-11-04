@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 django = "*"
+yfinance = "*"
+pandas = "*"
+xgboost = "*"
 
 [dev-packages]
 
