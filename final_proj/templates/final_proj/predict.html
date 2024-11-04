@@ -1,0 +1,19 @@
+<!-- final_proj/templates/final_proj/predict.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Price Predictor</title>
+</head>
+<body>
+    <h1>Predict Stock Prices</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Predict</button>
+        {% if form.errors %}
+            <p style="color: red;">{{ form.errors }}</p>
+        {% endif %}
+    </form>
+</body>
+</html>

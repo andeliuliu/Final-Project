@@ -8,6 +8,7 @@ django = "*"
 yfinance = "*"
 pandas = "*"
 xgboost = "*"
+scikit-learn = "*"
 
 [dev-packages]
 

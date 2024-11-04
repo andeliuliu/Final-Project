@@ -1,0 +1,36 @@
+<!-- final_proj/templates/final_proj/results.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Results</title>
+    <!-- Load the Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Load static files -->
+    {% load static %}
+</head>
+<body>
+    <h1>Prediction Results for {{ symbol }}</h1>
+    <p>Root Mean Squared Error (RMSE): {{ rmse|floatformat:2 }}</p>
+
+    <h2>Actual vs Predicted Closing Prices</h2>
+    <canvas id="priceChart" width="800" height="400"></canvas>
+
+    <h2>Feature Importance</h2>
+    <ul>
+        {% for importance, feature in feature_importance %}
+            <li>{{ feature }}: {{ importance|floatformat:2 }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Define JavaScript variables with data from the context -->
+    <script type="text/javascript">
+        var dates = {{ dates_json|safe }};
+        var actualPrices = {{ actual_json|safe }};
+        var predictedPrices = {{ predicted_json|safe }};
+    </script>
+
+    <!-- Include the external JavaScript file -->
+    <script src="{% static 'final_proj/js/results.js' %}"></script>
+</body>
+</html>
