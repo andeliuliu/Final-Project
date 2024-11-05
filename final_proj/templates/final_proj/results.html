@@ -1,36 +1,68 @@
-<!-- final_proj/templates/final_proj/results.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prediction Results</title>
-    <!-- Load the Chart.js library -->
+    <title>Stock Price Analysis</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Load static files -->
     {% load static %}
 </head>
 <body>
-    <h1>Prediction Results for {{ symbol }}</h1>
-    <p>Root Mean Squared Error (RMSE): {{ rmse|floatformat:2 }}</p>
+    <h1>Stock Price Analysis for {{ symbol }}</h1>
 
-    <h2>Actual vs Predicted Closing Prices</h2>
-    <canvas id="priceChart" width="800" height="400"></canvas>
+    <!-- Button to go back to the input form -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'home' %}" class="back-button">Predict Another Stock</a>
+    </div>
 
-    <h2>Feature Importance</h2>
-    <ul>
-        {% for importance, feature in feature_importance %}
-            <li>{{ feature }}: {{ importance|floatformat:2 }}</li>
-        {% endfor %}
-    </ul>
+    <!-- Statistics and Chart Section -->
+    <div style="display: flex;">
+        <div style="width: 70%;">
+            <h2>Actual Closing Prices</h2>
+            <canvas id="priceChart" width="800" height="400"></canvas>
+        </div>
+        <div style="width: 30%; padding-left: 20px;">
+            <h2>Stock Statistics</h2>
+            <p><strong>Current Price:</strong> ${{ current_price|floatformat:2 }}</p>
+            <p><strong>Market Cap:</strong> ${{ market_cap|floatformat:2 }}</p>
+            <p><strong>Price Target:</strong> ${{ price_target|floatformat:2 }}</p>
+            <p><strong>Upside/Downside:</strong> {{ upside_downside|floatformat:2 }}%</p>
+            <p><strong>Recommendation:</strong> {{ recommendation }}</p>
+        </div>
+    </div>
 
-    <!-- Define JavaScript variables with data from the context -->
+    <!-- JavaScript to Render the Chart -->
     <script type="text/javascript">
         var dates = {{ dates_json|safe }};
         var actualPrices = {{ actual_json|safe }};
-        var predictedPrices = {{ predicted_json|safe }};
-    </script>
 
-    <!-- Include the external JavaScript file -->
-    <script src="{% static 'final_proj/js/results.js' %}"></script>
+        var ctx = document.getElementById('priceChart').getContext('2d');
+        var priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Actual Prices',
+                    data: actualPrices,
+                    borderColor: 'blue',
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price ($)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
