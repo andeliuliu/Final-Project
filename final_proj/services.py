@@ -29,7 +29,7 @@ def evaluate_model(model, X_test, y_test):
     y_pred = model.predict(X_test)
     mse = mean_squared_error(y_test, y_pred)
     rmse = np.sqrt(mse)
-    return y_pred, rmse
+    return y_pred, rmse, mse
 
 
 def predict_stock_price(symbol, horizon):
@@ -39,20 +39,21 @@ def predict_stock_price(symbol, horizon):
 
     # Engineer features and prepare data
     data = engineer_features(data)
-    X, y = prepare_data_for_model(data, horizon)  # Use horizon to set the target
+    X, y = prepare_data_for_model(data, horizon)
 
-    # Split data and train model
+    # Split data into training and test sets
     X_train, X_test, y_train, y_test = split_data(X, y)
     model = train_model(X_train, y_train, X_test, y_test)
-    y_pred, rmse = evaluate_model(model, X_test, y_test)
+    y_pred, mse, rmse = evaluate_model(model, X_test, y_test)
 
     # Feature importance
     feature_importances = model.feature_importances_
     feature_names = X_train.columns
     feature_importance = sorted(zip(feature_importances, feature_names), reverse=True)
 
-    # Date labels for predictions
-    dates = data['Date'].iloc[-len(y_test):].dt.strftime('%Y-%m-%d').tolist()
+    # Predict the next day’s closing price
+    last_row = X.iloc[[-1]]  # Get the most recent data row
+    next_day_prediction = model.predict(last_row)[0]
 
     # Fetch additional stock details
     stock_info = stock.info
@@ -73,9 +74,10 @@ def predict_stock_price(symbol, horizon):
     ) if upside_downside is not None else "No Recommendation"
 
     return {
-        'dates': dates,
+        'dates': data['Date'].iloc[-len(y_test):].dt.strftime('%Y-%m-%d').tolist(),
         'actual': y_test.tolist(),
         'predicted': y_pred.tolist(),
+        'mse': mse,
         'rmse': rmse,
         'feature_importance': feature_importance,
         'current_price': current_price,
@@ -83,4 +85,5 @@ def predict_stock_price(symbol, horizon):
         'price_target': price_target,
         'upside_downside': upside_downside,
         'recommendation': recommendation,
+        'next_day_prediction': next_day_prediction,  # Pass next day prediction to the template
     }

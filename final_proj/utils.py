@@ -63,7 +63,8 @@ def engineer_features(data):
 
 # utils.py
 
-def prepare_data_for_model(data, horizon=1):
+def prepare_data_for_model(data, horizon):
+    print("horizon: ", horizon)
     # Define features for the model
     X = data[['Open', 'High', 'Low', 'Close', 'Volume', 'MA_10', 'MA_50', 'RSI', 'Bollinger_High', 'Bollinger_Low']]
 

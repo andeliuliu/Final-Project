@@ -12,12 +12,39 @@
     <div style="margin-bottom: 20px;">
         <a href="{% url 'home' %}" class="back-button">Predict Another Stock</a>
     </div>
+    <div>
+        <label for="horizon-select"><strong>Select Prediction Horizon:</strong></label>
+        <select id="horizon-select" onchange="updatePrediction()">
+            <option value="1" {% if horizon == 1 %}selected{% endif %}>1 Day</option>
+            <option value="5" {% if horizon == 5 %}selected{% endif %}>1 Week</option>
+            <option value="20" {% if horizon == 20 %}selected{% endif %}>1 Month</option>
+            <option value="60" {% if horizon == 60 %}selected{% endif %}>3 Months</option>
+            <option value="120" {% if horizon == 120 %}selected{% endif %}>6 Months</option>
+        </select>
+    </div>
 
+    <script type="text/javascript">
+        function updatePrediction() {
+            // Get selected horizon
+            var horizon = document.getElementById("horizon-select").value;
+            // Redirect to predict view with selected horizon
+            window.location.href = "{% url 'predict' %}?symbol={{ symbol }}&horizon=" + horizon;
+        }
+    </script>
     <!-- Statistics and Chart Section -->
     <div style="display: flex;">
         <div style="width: 70%;">
             <h2>Actual Closing Prices</h2>
             <canvas id="priceChart" width="800" height="400"></canvas>
+        </div>
+        <div>
+            <h2>Next Day's Predicted Closing Price</h2>
+            <p><strong>Predicted Closing Price for Next Trading Day:</strong> ${{ next_day_prediction|floatformat:2 }}</p>
+        </div>
+        <div>
+            <h2>Model Evaluation</h2>
+            <p><strong>Mean Squared Error (MSE):</strong> {{ mse|floatformat:2 }}</p>
+            <p><strong>Root Mean Squared Error (RMSE):</strong> {{ rmse|floatformat:2 }}</p>
         </div>
         <div style="width: 30%; padding-left: 20px;">
             <h2>Stock Statistics</h2>
@@ -25,7 +52,7 @@
             <p><strong>Market Cap:</strong> ${{ market_cap|floatformat:2 }}</p>
             <p><strong>Price Target:</strong> ${{ price_target|floatformat:2 }}</p>
             <p><strong>Upside/Downside:</strong> {{ upside_downside|floatformat:2 }}%</p>
-            <p><strong>Recommendation:</strong> {{ recommendation }}</p>
+            <!-- <p><strong>Recommendation:</strong> {{ recommendation }}</p> -->
         </div>
     </div>
 
