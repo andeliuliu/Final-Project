@@ -18,6 +18,7 @@ def predict_view(request):
             # Serialize only the actual data to JSON for JavaScript
             context['dates_json'] = json.dumps(context['dates'])
             context['actual_json'] = json.dumps(context['actual'])
+            context['predicted_json'] = json.dumps(context['predicted'])
 
             return render(request, 'final_proj/results.html', context)
         except Exception as e:

@@ -34,12 +34,12 @@
     <!-- Statistics and Chart Section -->
     <div style="display: flex;">
         <div style="width: 70%;">
-            <h2>Actual Closing Prices</h2>
+            <h2>Actual vs Predicted Closing Prices</h2>
             <canvas id="priceChart" width="800" height="400"></canvas>
         </div>
         <div>
             <h2>Next Day's Predicted Closing Price</h2>
-            <p><strong>Predicted Closing Price for Next Trading Day:</strong> ${{ next_day_prediction|floatformat:2 }}</p>
+            <p><strong>Predicted Closing Price for Next Trading Horizon:</strong> ${{ next_day_prediction|floatformat:2 }}</p>
         </div>
         <div>
             <h2>Model Evaluation</h2>
@@ -52,7 +52,6 @@
             <p><strong>Market Cap:</strong> ${{ market_cap|floatformat:2 }}</p>
             <p><strong>Price Target:</strong> ${{ price_target|floatformat:2 }}</p>
             <p><strong>Upside/Downside:</strong> {{ upside_downside|floatformat:2 }}%</p>
-            <!-- <p><strong>Recommendation:</strong> {{ recommendation }}</p> -->
         </div>
     </div>
 
@@ -60,18 +59,27 @@
     <script type="text/javascript">
         var dates = {{ dates_json|safe }};
         var actualPrices = {{ actual_json|safe }};
+        var predictedPrices = {{ predicted_json|safe }};
 
         var ctx = document.getElementById('priceChart').getContext('2d');
         var priceChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: dates,
-                datasets: [{
-                    label: 'Actual Prices',
-                    data: actualPrices,
-                    borderColor: 'blue',
-                    fill: false
-                }]
+                datasets: [
+                    {
+                        label: 'Actual Prices',
+                        data: actualPrices,
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Predicted Prices',
+                        data: predictedPrices,
+                        borderColor: 'red',
+                        fill: false,
+                    }
+                ]
             },
             options: {
                 scales: {
