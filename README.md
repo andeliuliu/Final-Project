@@ -3,6 +3,9 @@
 ## Presentation Link
 [View the report on Google Slides with visualizations of data](https://docs.google.com/presentation/d/1ldVlhIxLv9Ws7QH0tb8xTBQSvn2ezauIiC9Rqwx9vVc/edit#slide=id.g3122b41325a_0_88)
 
+## Demo Video Link
+[Demo Video](https://drive.google.com/file/d/17jLHJ15lHiLnFOFMQxTxZ178IyBICTaJ/view?usp=sharing)
+
 ## Overview
 This project uses the XGBoost algorithm to predict stock prices based on historical data and technical indicators. The model focuses on structured data and is designed to capture complex relationships within time-series data for more accurate short-term predictions.
 
