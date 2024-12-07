@@ -16,8 +16,6 @@
             <option value="1" {% if horizon == 1 %}selected{% endif %}>1 Day</option>
             <option value="5" {% if horizon == 5 %}selected{% endif %}>1 Week</option>
             <option value="20" {% if horizon == 20 %}selected{% endif %}>1 Month</option>
-            <option value="60" {% if horizon == 60 %}selected{% endif %}>3 Months</option>
-            <option value="120" {% if horizon == 120 %}selected{% endif %}>6 Months</option>
         </select>
     </div>
 
@@ -26,6 +24,14 @@
             var horizon = document.getElementById("horizon-select").value;
             window.location.href = "{% url 'predict' %}?symbol={{ symbol }}&horizon=" + horizon;
         }
+
+        // Trigger updatePrediction when the page loads with the default horizon of 1
+        window.onload = function() {
+            if (!window.location.search.includes("horizon")) {
+                document.getElementById("horizon-select").value = 1;
+                updatePrediction();
+            }
+        };
     </script>
 
     <!-- Chart Section -->
@@ -36,20 +42,21 @@
 
     <!-- Statistic Cards Section -->
     <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
-        <!-- Wrapped Next Day's Predicted Closing Price in a div -->
+        <!-- Next Day's Predicted Closing Price -->
         <div class="stat-card" style="flex: 1 1 30%;">
             <h2>Next Day's Predicted Closing Price</h2>
             <p><strong>Predicted Closing Price for Next Trading Horizon:</strong> ${{ next_day_prediction|floatformat:2 }}</p>
         </div>
 
-        <!-- Wrapped Model Evaluation in a div -->
+        <!-- Model Evaluation -->
         <div class="stat-card" style="flex: 1 1 30%;">
             <h2>Model Evaluation</h2>
-            <p><strong>Mean Squared Error (MSE):</strong> {{ mse|floatformat:2 }}</p>
             <p><strong>Root Mean Squared Error (RMSE):</strong> {{ rmse|floatformat:2 }}</p>
+            <p><strong>RMSE as % of Close Price Range:</strong> {{ rmse_range_percentage|floatformat:2 }}%</p>
+            <p><strong>RMSE as % of Average Close Price:</strong> {{ rmse_avg_percentage|floatformat:2 }}%</p>
         </div>
 
-        <!-- Wrapped Stock Statistics in a div -->
+        <!-- Stock Statistics -->
         <div class="stat-card" style="flex: 1 1 30%;">
             <h2>Stock Statistics</h2>
             <p><strong>Current Price:</strong> ${{ current_price|floatformat:2 }}</p>

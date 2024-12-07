@@ -11,7 +11,7 @@ def predict_view(request):
 
         try:
             # Fetch prediction data with specified horizon
-            context = predict_stock_price(symbol, horizon)
+            context = predict_stock_price(symbol, 'Close', horizon)
             context['symbol'] = symbol
             context['horizon'] = horizon  # Pass horizon to template
 
