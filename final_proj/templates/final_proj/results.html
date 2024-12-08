@@ -46,6 +46,8 @@
         <div class="stat-card" style="flex: 1 1 30%;">
             <h2>Next Day's Predicted Closing Price</h2>
             <p><strong>Predicted Closing Price for Next Trading Horizon:</strong> ${{ next_day_prediction|floatformat:2 }}</p>
+            <p><strong>Recommendation:</strong> {{ recommendation }}</p>
+
         </div>
 
         <!-- Model Evaluation -->
