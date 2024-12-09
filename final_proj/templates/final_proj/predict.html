@@ -1,5 +1,3 @@
-<!-- final_proj/templates/final_proj/predict.html -->
-
 {% extends 'final_proj/base.html' %}
 
 {% block title %}Predict Stock Prices{% endblock %}
@@ -9,8 +7,15 @@
     <h4>Search for a stock to view analysis</h4>
     <form method="post" action="{% url 'predict' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Predict</button>
+        <div class="button-group">
+            <button type="submit" name="symbol" value="AAPL">Apple</button>
+            <button type="submit" name="symbol" value="TSLA">Tesla</button>
+            <button type="submit" name="symbol" value="NVDA">NVIDIA</button>
+            <button type="submit" name="symbol" value="JNJ">Johnson & Johnson</button>
+            <button type="submit" name="symbol" value="PG">Procter & Gamble</button>
+            <button type="submit" name="symbol" value="MSFT">Microsoft</button>
+            <button type="submit" name="symbol" value="KO">Coca Cola</button>
+        </div>
         {% if form.errors %}
             <p class="error-message">{{ form.errors }}</p>
         {% endif %}

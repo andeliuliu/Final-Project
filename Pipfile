@@ -9,6 +9,12 @@ yfinance = "*"
 pandas = "*"
 xgboost = "*"
 scikit-learn = "*"
+snscrape = "*"
+textblob = "*"
+datetime = "*"
+requests = "*"
+statsmodels = "*"
+keras = "*"
 
 [dev-packages]
 
