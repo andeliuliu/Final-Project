@@ -6,6 +6,7 @@
 
 {% block content %}
     <h1>Predict Stock Prices</h1>
+    <h4>Search for a stock to view analysis</h4>
     <form method="post" action="{% url 'predict' %}">
         {% csrf_token %}
         {{ form.as_p }}

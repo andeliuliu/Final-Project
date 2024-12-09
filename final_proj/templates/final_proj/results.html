@@ -13,6 +13,7 @@
     <div>
         <label for="horizon-select"><strong>Select Prediction Horizon:</strong></label>
         <select id="horizon-select" onchange="updatePrediction()">
+            <option value="" {% if not horizon %}selected{% endif %} disabled>Select horizon</option>
             <option value="1" {% if horizon == 1 %}selected{% endif %}>1 Day</option>
             <option value="5" {% if horizon == 5 %}selected{% endif %}>1 Week</option>
             <option value="20" {% if horizon == 20 %}selected{% endif %}>1 Month</option>
@@ -20,6 +21,8 @@
             <option value="120" {% if horizon == 120 %}selected{% endif %}>6 Months</option>
         </select>
     </div>
+    
+    
 
     <script type="text/javascript">
         function updatePrediction() {
