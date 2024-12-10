@@ -178,6 +178,74 @@ The models were combined to leverage their complementary strengths:
 
 ## 7. Results
 
+### 1. Accuracy vs. Prediction Horizon:
+- For shorter prediction horizons (1 day), the RMSE is relatively low, indicating that the model can capture short-term trends effectively.
+- As the prediction horizon increases (e.g., 1 week or 1 month), the RMSE increases significantly, reflecting the model’s struggle to predict long-term trends accurately. This is consistent with financial market unpredictability over extended periods.
+
+### 2. Actual vs. Predicted Trends:
+- The actual prices (blue lines) show significant variability and volatility in the data, which is characteristic of stock price movements.
+- Predicted prices (red lines) are smoother, indicating the model’s limitations in capturing sharp, sudden price changes influenced by external factors like news or market events.
+
+### 3. Evaluation Metrics:
+- **RMSE**: Provides an absolute measure of the prediction error, which is particularly useful for comparing performance across stocks with similar price ranges.
+- **RMSE as % of Close Price Range**: Contextualizes the RMSE relative to the stock’s volatility, highlighting how well the model adapts to stocks with different price variances.
+- **RMSE as % of Average Close Price**: Allows cross-comparison between stocks of varying price levels.
+
+---
+
+# 1. AAPL (Apple)
+
+- **Horizon**: 1 Day
+- **RMSE**: 6.50
+- **RMSE as % of Close Price Range**: 6.32%
+- **RMSE as % of Average Close Price**: 3.41%
+- **Next Day Prediction**: $228.20 (Recommendation: Hold)
+
+### Analysis:
+- The model performs reasonably well for Apple, with a low RMSE indicating accurate short-term predictions.
+- The “Hold” recommendation aligns with minimal deviation in predicted vs. actual prices.
+- The model successfully tracks overall trends but underestimates short-term spikes or dips.
+
+---
+
+# 2. MSFT (Microsoft)
+
+- **Horizon**:
+  - **1 Day**: RMSE = 7.06, RMSE as % of Close Price Range = 3.17%, RMSE as % of Average Close Price = 1.90%.
+  - **1 Week**: RMSE = 9.91, RMSE as % of Close Price Range = 4.45%, RMSE as % of Average Close Price = 2.67%.
+- **Next Day Prediction (1 Day Horizon)**: $432.80 (Recommendation: Strong Buy)
+- **Next Day Prediction (1 Week Horizon)**: $424.24 (Recommendation: Strong Buy)
+
+### Analysis:
+- The model shows strong performance with low RMSE percentages for both 1-day and 1-week horizons, reflecting its ability to predict short- to medium-term movements for Microsoft accurately.
+- The recommendation of “Strong Buy” is backed by the upward trend in predicted prices, aligning with actual price movements.
+- The 1-week horizon demonstrates slightly higher error due to increased market uncertainty over time.
+
+---
+
+# Insights and Possible Improvements
+
+## 1. Short-Term vs. Long-Term Predictions:
+- The model performs well for short-term predictions (1 day) across all stocks, with low RMSE percentages indicating accurate predictions.
+- For longer horizons (1 week, 1 month), performance degrades due to the model’s inability to capture long-term volatility and external factors.
+
+## 2. Stock-Specific Challenges:
+- Stocks like NVIDIA and Coca-Cola exhibit higher volatility or long-term trend shifts, leading to higher RMSE percentages for their predictions.
+- Stable stocks like Johnson & Johnson show consistently lower RMSE, making them more suitable for the current model.
+
+## 3. Feature Engineering Improvements:
+- Incorporate additional features like macroeconomic indicators (e.g., interest rates) or sentiment analysis to improve long-term prediction accuracy.
+- Enhance the model to capture sudden price changes by integrating news-based events or other external signals.
+
+## 4. Model Adjustments:
+- For longer horizons, explore ensemble approaches combining SARIMA with deep learning models (e.g., LSTMs) to better handle sequential data and volatility.
+- Refine hyperparameters for specific stocks with higher volatility.
+
+---
+
+### Overall:
+The model demonstrates strong predictive power for short-term horizons, particularly for stable stocks, but further improvements are necessary to handle long-term forecasts and volatile stock behaviors effectively.
+
 ---
 
 ## 8. Comparison of Midterm and Final Models
