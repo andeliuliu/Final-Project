@@ -208,8 +208,6 @@ The transition from the midterm to the final model marks a significant improveme
 **Impact**:
 The expanded feature set significantly enhanced the final model’s ability to capture non-linear relationships and long-term trends, making it more robust across different stocks and market conditions.
 
----
-
 ### 8.2 Model Tuning
 **Midterm Model**:
 - Minimal Hyperparameter Tuning:
@@ -231,8 +229,6 @@ The expanded feature set significantly enhanced the final model’s ability to c
 **Impact**:
 The tuning process improved model accuracy and generalization, while the inclusion of SARIMA enabled the capture of long-term patterns that were previously ignored.
 
----
-
 ### 8.3 Validation Approach
 **Midterm Model**:
 - Basic Validation:
@@ -250,8 +246,6 @@ The tuning process improved model accuracy and generalization, while the inclusi
 
 **Impact**:
 The improved validation approach provided a more accurate assessment of the models’ real-world performance, enhancing confidence in the predictions.
-
----
 
 ### 8.4 Model Design
 **Midterm Model**:
