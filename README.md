@@ -7,40 +7,92 @@
 [Demo Video](https://drive.google.com/file/d/17jLHJ15lHiLnFOFMQxTxZ178IyBICTaJ/view?usp=sharing)
 
 ## Overview
-This project uses the XGBoost algorithm to predict stock prices based on historical data and technical indicators. The model focuses on structured data and is designed to capture complex relationships within time-series data for more accurate short-term predictions.
+This report presents a comprehensive study on predicting stock prices using two advanced models: XGBoost, a machine learning algorithm, and SARIMA, a time-series statistical model. The primary goal is to understand short-term price movements while incorporating long-term seasonal trends. We leverage extensive data exploration, advanced feature engineering, hyperparameter tuning, and a robust evaluation framework. By comparing the strengths and weaknesses of these models, we aim to identify their suitability for financial forecasting and propose methods for further improvement.
 
-## Features Used for Prediction
+## 1. Introduction
+Stock price prediction remains one of the most challenging tasks in financial analytics due to market volatility, non-linearity, and the influence of unpredictable external factors. Accurate forecasting can provide traders and investors with critical insights, enabling informed decision-making and risk management.
 
-The following features were selected due to their known impact on stock prices:
-- **Moving Averages**: 10-day and 50-day intervals help smooth out price trends.
-- **RSI (Relative Strength Index)**: Measures stock momentum to determine if it’s overbought or oversold.
-- **Bollinger Bands**: Provides insight into the volatility of the stock.
-- **Trading Volume**: Indicates the level of activity in the stock, potentially signaling trends.
+This project combines machine learning and time-series modeling techniques:
+	1.	XGBoost is well-suited for capturing non-linear relationships and interactions between features.
+	2.	SARIMA specializes in modeling seasonality and trends in time-series data.
 
-Each feature contributes a unique perspective on stock behavior, giving the model a well-rounded view of past trends for future price prediction.
+The report focuses on:
+	•	Data exploration and feature selection.
+	•	Model design and tuning.
+	•	Performance evaluation and comparison.
+	•	Insights into the impact of prediction horizons.
 
-## Modeling Method
+Additionally, the report discusses improvements made over a prior midterm implementation and outlines future enhancements.
 
-We used the `XGBRegressor` model from the XGBoost library, chosen for its ability to capture non-linear relationships and feature interactions, which is well-suited for time-series predictions.
+## 2. Data Exploration
 
-To ensure robustness:
-- We applied an 80/20 train-test split.
-- Used cross-validation to prevent overfitting.
-- Leveraged features such as previous closing prices, moving averages, and other technical indicators.
+** 2.1 Data Collection **
+The dataset comprises two years of daily stock price data for companies like Apple (AAPL) and Tesla (TSLA), sourced using the yfinance API. The data includes:
+	•	Date: Timestamps of observations.
+	•	Open, High, Low, Close Prices: Intraday price data.
+	•	Volume: Number of shares traded.
 
-## Model Evaluation and Insights
+** 2.2 Key Observations **
+1.	Seasonality: Periodic patterns, such as monthly trends, were observed in many stocks, making SARIMA an appropriate model for capturing these effects.
+2.	Volatility: Stocks like Tesla exhibited high intraday variations, requiring models that can handle noise and non-linearity.
+3.	Price Trends: Stocks displayed consistent trends over shorter intervals, making technical indicators like Moving Averages highly relevant. 4.	Volume Trends: Peaks in trading volume often coincided with significant price movements, reinforcing its importance as a feature.
 
-Performance was visualized by plotting both actual and predicted prices on a time-series line graph, allowing us to see where the model aligns closely with real values and where it diverges, highlighting potential areas for improvement.
+** 2.3 Challenges **
+1.	Noise: Stock prices are influenced by external factors (e.g., news, economic policies) that are difficult to model directly.
+2.	Non-Linearity: Complex interactions between variables necessitate advanced algorithms like XGBoost.
+3.	Temporal Dependencies: Accurate predictions require models that account for past values, such as SARIMA and lagged features.
 
-### Example Results
+### 3. Feature Engineering and Selection
+Feature engineering plays a pivotal role in improving model performance by incorporating domain knowledge into the dataset. Below are the features used and the reasoning for their inclusion:
 
-- **Apple (AAPL)**: Achieved an RMSE of 23.15 for a 1-day prediction horizon. However, as the horizon increases (e.g., 1 week or 1 month), the RMSE rises, and the predicted and actual price lines diverge, indicating reduced accuracy over longer time frames.
-- **Tesla (TSLA)**: The model accurately captures short-term trends, but similarly to AAPL, longer-term predictions exhibit increased RMSE.
+** 3.1 Core Variables **
+1.	Close Price (Target Variable):
+  	•	Represents the final price at which the stock was traded each day.
+  	•	Chosen as the target variable due to its significance in financial decision-making.
+2.	Open, High, Low Prices:
+    •	Provide insights into intraday price behavior. 
+    •	Contribute to indicators like Bollinger Bands and ATR.
+4.	Volume:
+    •	Indicates market activity, often correlated with price trends.
+  	•	High trading volume typically precedes significant price movements.
 
-This increase in RMSE over longer horizons is due to the model's limited capacity to account for unpredictable external factors, such as market news and economic changes, which influence stock prices but aren’t captured in purely technical data.
+** 3.2 Technical Indicators **
+Technical indicators are mathematical calculations based on price, volume, or a combination of both. They help identify trends, momentum, and volatility.
 
-## Services and Utilities
-
+1.	VWAP (Volume Weighted Average Price):
+    •	Formula: (Close × Volume).cumsum() / Volume.cumsum()
+  	•	Importance: Reflects the average price weighted by volume, commonly used by institutional traders.
+2.	Moving Averages (10-day, 50-day):
+    •	Capture short-term (10-day) and long-term (50-day) price trends.
+  	•	Useful for identifying trend reversals when short- and long-term averages intersect (e.g., golden/death cross).
+3.	RSI (Relative Strength Index):
+    •	Formula: 100 - (100 / (1 + RS)), where RS = Avg Gain / Avg Loss.
+  	•	Importance: Measures momentum, identifying overbought (>70) or oversold (<30) conditions.
+4.	Bollinger Bands:
+    •	Upper Band = Rolling Mean + 2 × Rolling Std
+  	•	Lower Band = Rolling Mean - 2 × Rolling Std
+  	•	Importance: Highlights price deviations and volatility.
+5.	MACD (Moving Average Convergence Divergence):
+    •	Tracks the difference between short-term (12-day) and long-term (26-day) exponential moving averages.
+  	•	Importance: Identifies trend shifts.
+6.	ATR (Average True Range):
+    •	Measures daily price volatility based on the range of high, low, and close prices.
+  	•	Importance: Used for risk management.
+7.	ADX (Average Directional Index):
+    •	Evaluates trend strength; values >25 indicate strong trends.
+8.	Stochastic Oscillator:
+    •	Formula: (Close - Lowest Low) / (Highest High - Lowest Low) × 100
+   	•	Importance: Tracks momentum by comparing closing prices to historical ranges.
+  	
+** 3.3 Lagged and Derived Features **
+1.	Lagged Close Prices (1-day, 2-day, 3-day):
+    •	Introduce temporal dependencies for recursive forecasting.
+2.	Daily Variation:
+    •	Formula: (High - Low) / Open
+  	•	Importance: Reflects market volatility.
+3.	High-Close and Low-Open Ratios:
+    •	Capture intraday price pressure, indicating upward/downward trends.
+ 
 ### Services (`services.py`)
 
 - **train_model**: Trains an XGBoost regression model with early stopping based on test performance, setting a maximum of 1000 trees and a learning rate of 0.01.
@@ -59,8 +111,144 @@ This increase in RMSE over longer horizons is due to the model's limited capacit
 - **prepare_data_for_model**: Prepares features (X) and target (y) by shifting the target for the specified horizon and removing empty rows.
 - **split_data**: Splits features and target data into training and testing sets based on a specified test size.
 
-## Challenges and Improvements
+## 4. Model Selection
+** 4.1 XGBoost **
+XGBoost was chosen for its ability to handle:
+	1.	Non-Linear Interactions: Captures relationships among multiple technical indicators.
+	2.	High-Dimensional Data: Efficiently processes numerous features.
+	3.	Regularization: Reduces overfitting through parameters like reg_alpha and reg_lambda.
 
+** 4.2 SARIMA **
+SARIMA is ideal for:
+	1.	Seasonality and Trends: Models recurring patterns like monthly price fluctuations.
+	2.	Explainability: Provides interpretable components, such as trend and seasonal effects.
+
+** 4.3 Ensemble Approach **
+The models were combined to leverage their complementary strengths:
+	•	XGBoost: Captures short-term, non-linear dynamics.
+	•	SARIMA: Focuses on long-term trends and seasonality.
+
+## 5. Model Tuning
+** 5.1 XGBoost **
+  •	Learning Rate: Set to 0.01 for gradual convergence. 
+  •	Max Depth: Tuned to 6 for a balance between complexity and overfitting. 
+  •	Subsample: Set to 80% to improve generalization. 
+  •	Early Stopping: Stops training after 10 rounds without improvement.
+
+** 5.2 SARIMA **
+  •	Order: (1, 1, 1) for non-seasonal components. 
+  •	Seasonal Order: (1, 1, 1, 12) for monthly seasonality.
+  
+## 7. Results
+  
+## 6. Model Validation
+** 6.1 Metrics Used **
+1. Root Mean Squared Error (RMSE):
+  •	Measures prediction error.
+2. Relative RMSE (% of Close Price Range):
+  •	Contextualizes RMSE based on price volatility. 3.	Relative RMSE (% of Average Close Price): •	Allows comparisons across stocks with different price levels.
+
+** 6.2 Validation Approach **
+  • Train-Test Split: 80/20 split for model evaluation. 
+  •	Time-Series Validation: Ensures models are tested on unseen future data. 
+  •	Cross-Validation: Reduces overfitting and improves generalization.
+
+## 8. Comparison of Midterm and Final Models
+The transition from the midterm to the final model marks a significant improvement in terms of data processing, feature engineering, model design, evaluation, and overall predictive performance. This section provides a detailed comparison of the two models and highlights the key improvements.
+
+** 8.1 Feature Engineering **
+Midterm Model:
+	•	Limited Features:
+	    •	Used basic technical indicators such as simple Moving Averages and Relative Strength Index (RSI).
+	    •	Focused solely on price-based features, ignoring volume, volatility, and momentum indicators.
+	•	No Advanced Derived Features:
+	    •	Did not include lagged variables or features derived from intraday price movements, such as Daily Variation or High-Close Ratios.
+	•	No Recursive Features:
+    	•	No consideration for the temporal dependencies required for recursive forecasting.
+
+Final Model:
+	•	Extensive Feature Set:
+	    • Integrated advanced technical indicators, including Bollinger Bands, MACD, VWAP, ATR, ADX, and the Stochastic Oscillator.
+    	•	Captured volatility and trend strength, which are crucial for market prediction.
+	•	Lagged Features:
+	    •	Introduced lagged variables (Close_Lag_1, Close_Lag_2, Close_Lag_3) to capture temporal dependencies and enhance recursive predictions.
+	•	Derived Features:
+    	•	Added custom metrics like Daily Variation, High-Close Ratio, and Low-Open Ratio, which provide nuanced insights into intraday price behavior.
+	•	Volume-Weighted Features:
+    	•	Included VWAP to reflect institutional trading behavior and its impact on price movements.
+
+Impact:
+The expanded feature set significantly enhanced the final model’s ability to capture non-linear relationships and long-term trends, making it more robust across different stocks and market conditions.
+
+** 8.2 Model Tuning **
+Midterm Model:
+	•	Minimal Hyperparameter Tuning:
+    	•	Used default parameters for XGBoost, resulting in suboptimal performance.
+    	•	No systematic exploration of key hyperparameters like learning rate, maximum depth, or subsampling ratios.
+	•	SARIMA Absent:
+    	•	Did not include any time-series model to handle seasonality or trends.
+
+Final Model:
+	•	Systematic Hyperparameter Tuning for XGBoost:
+    	•	Learning Rate: Tuned to 0.01 for gradual optimization, preventing overfitting while improving convergence.
+    	•	Maximum Depth: Optimized at 6 to balance complexity and overfitting.
+    	•	Subsample and Column Subsample: Set to 80% to enhance generalization.
+    	•	Early Stopping: Incorporated early stopping rounds to prevent overfitting.
+	•	SARIMA Added:
+    	•	Configured with order = (1, 1, 1) and seasonal_order = (1, 1, 1, 12) to capture monthly seasonality and long-term trends.
+    	•	Differenced data to achieve stationarity and align with SARIMA’s assumptions.
+
+Impact:
+The tuning process improved model accuracy and generalization, while the inclusion of SARIMA enabled the capture of long-term patterns that were previously ignored.
+
+** 8.3 Validation Approach **
+Midterm Model:
+	•	Basic Validation:
+	    •	Relied on simple train-test splits without considering the temporal structure of the data.
+    	•	No cross-validation or out-of-sample testing, increasing the risk of overfitting.
+
+Final Model:
+	•	Robust Validation Framework:
+	    •	Time-Series Split: Ensured that the training and testing data were chronologically separated to reflect real-world forecasting scenarios.
+    	•	Cross-Validation: Applied k-fold cross-validation to minimize overfitting and assess performance consistency across different subsets of data.
+	    •	Multiple Metrics:
+	        •	RMSE to measure error magnitude.
+	        •	RMSE as a percentage of Close Price Range to contextualize performance relative to stock volatility.
+        	•	RMSE as a percentage of Average Close Price to enable cross-stock comparisons.
+
+Impact:
+The improved validation approach provided a more accurate assessment of the models’ real-world performance, enhancing confidence in the predictions.
+
+** 8.4 Model Design **
+Midterm Model:
+	•	Single Model:
+	    • Relied solely on XGBoost, limiting its ability to capture long-term trends or seasonal effects.
+	•	Simplistic Architecture:
+	    •	Did not incorporate ensemble techniques or consider the unique strengths of different models.
+
+Final Model:
+	•	Hybrid Model Architecture:
+    	•	Combined XGBoost for short-term, non-linear dynamics and SARIMA for long-term seasonal trends.
+	•	Ensemble Approach:
+    	•	Weighted predictions from XGBoost (70%) and SARIMA (30%) to balance short- and long-term forecasting accuracy.
+
+Impact:
+The hybrid architecture improved flexibility and performance, allowing the model to adapt to different market conditions and prediction horizons.
+
+## 9. Assumptions and Decisions 
+1.	Stationarity: Assumed SARIMA’s data could be differenced to achieve stationarity.
+2.	Feature Selection: Chosen based on domain knowledge and statistical relevance.
+3.	Prediction Horizon: Focused on short-term accuracy due to increased uncertainty in long-term forecasts.
+
+## 10. Improvements and Future Work
+1.	Feature Expansion:
+    •	Incorporate sentiment analysis from news and social media.
+  	•	Add macroeconomic variables (e.g., interest rates, GDP growth).
+2.	Advanced Models:
+    •	Explore RNNs and Transformers for sequential forecasting.
+3.	Real-Time Integration:
+    •	Deploy models in real-time trading systems for dynamic predictions.
+  	
 ### Challenges
 Managing the model's Root Mean Squared Error (RMSE) was a primary challenge, as reducing RMSE would improve the model's reliability.
 
