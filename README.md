@@ -178,76 +178,110 @@ The models were combined to leverage their complementary strengths:
 
 ## 7. Results
 
-### 1. Accuracy vs. Prediction Horizon:
-- For shorter prediction horizons (1 day), the RMSE is relatively low, indicating that the model can capture short-term trends effectively.
-- As the prediction horizon increases (e.g., 1 week or 1 month), the RMSE increases significantly, reflecting the model’s struggle to predict long-term trends accurately. This is consistent with financial market unpredictability over extended periods.
+### 7.1 General Observations
+1. **Accuracy vs. Prediction Horizon**:
+   - For shorter prediction horizons (1 day), the RMSE is relatively low, indicating that the model can capture short-term trends effectively.
+   - As the prediction horizon increases (e.g., 1 week or 1 month), the RMSE increases significantly, reflecting the model's struggle to predict long-term trends accurately. This is consistent with financial market unpredictability over extended periods.
 
-### 2. Actual vs. Predicted Trends:
-- The actual prices (blue lines) show significant variability and volatility in the data, which is characteristic of stock price movements.
-- Predicted prices (red lines) are smoother, indicating the model’s limitations in capturing sharp, sudden price changes influenced by external factors like news or market events.
+2. **Actual vs. Predicted Trends**:
+   - The actual prices (blue lines) show significant variability and volatility in the data, which is characteristic of stock price movements.
+   - Predicted prices (red lines) are smoother, indicating the model's limitations in capturing sharp, sudden price changes influenced by external factors like news or market events.
 
-### 3. Evaluation Metrics:
-- **RMSE**: Provides an absolute measure of the prediction error, which is particularly useful for comparing performance across stocks with similar price ranges.
-- **RMSE as % of Close Price Range**: Contextualizes the RMSE relative to the stock’s volatility, highlighting how well the model adapts to stocks with different price variances.
-- **RMSE as % of Average Close Price**: Allows cross-comparison between stocks of varying price levels.
+3. **Evaluation Metrics**:
+   - **RMSE**: Provides an absolute measure of the prediction error, which is particularly useful for comparing performance across stocks with similar price ranges.
+   - **RMSE as % of Close Price Range**: Contextualizes the RMSE relative to the stock's volatility, highlighting how well the model adapts to stocks with different price variances.
+   - **RMSE as % of Average Close Price**: Allows cross-comparison between stocks of varying price levels.
 
----
+### 7.2 Stock-Specific Analysis
 
-# 1. AAPL (Apple)
-
+#### **1. AAPL (Apple)**
 - **Horizon**: 1 Day
 - **RMSE**: 6.50
 - **RMSE as % of Close Price Range**: 6.32%
 - **RMSE as % of Average Close Price**: 3.41%
 - **Next Day Prediction**: $228.20 (Recommendation: Hold)
 
-### Analysis:
+**Analysis**:
 - The model performs reasonably well for Apple, with a low RMSE indicating accurate short-term predictions.
-- The “Hold” recommendation aligns with minimal deviation in predicted vs. actual prices.
+- The "Hold" recommendation aligns with minimal deviation in predicted vs. actual prices.
 - The model successfully tracks overall trends but underestimates short-term spikes or dips.
 
 ---
 
-# 2. MSFT (Microsoft)
-
+#### **2. MSFT (Microsoft)**
 - **Horizon**:
-  - **1 Day**: RMSE = 7.06, RMSE as % of Close Price Range = 3.17%, RMSE as % of Average Close Price = 1.90%.
-  - **1 Week**: RMSE = 9.91, RMSE as % of Close Price Range = 4.45%, RMSE as % of Average Close Price = 2.67%.
+   - **1 Day**: RMSE = 7.06, RMSE as % of Close Price Range = 3.17%, RMSE as % of Average Close Price = 1.90%.
+   - **1 Week**: RMSE = 9.91, RMSE as % of Close Price Range = 4.45%, RMSE as % of Average Close Price = 2.67%.
 - **Next Day Prediction (1 Day Horizon)**: $432.80 (Recommendation: Strong Buy)
 - **Next Day Prediction (1 Week Horizon)**: $424.24 (Recommendation: Strong Buy)
 
-### Analysis:
+**Analysis**:
 - The model shows strong performance with low RMSE percentages for both 1-day and 1-week horizons, reflecting its ability to predict short- to medium-term movements for Microsoft accurately.
-- The recommendation of “Strong Buy” is backed by the upward trend in predicted prices, aligning with actual price movements.
+- The recommendation of "Strong Buy" is backed by the upward trend in predicted prices, aligning with actual price movements.
 - The 1-week horizon demonstrates slightly higher error due to increased market uncertainty over time.
 
 ---
 
-# Insights and Possible Improvements
+#### **3. KO (Coca-Cola)**
+- **Horizon**: 1 Month
+- **RMSE**: 3.20
+- **RMSE as % of Close Price Range**: 14.84%
+- **RMSE as % of Average Close Price**: 5.31%
+- **Next Day Prediction**: $65.96 (Recommendation: Strong Buy)
 
-## 1. Short-Term vs. Long-Term Predictions:
-- The model performs well for short-term predictions (1 day) across all stocks, with low RMSE percentages indicating accurate predictions.
-- For longer horizons (1 week, 1 month), performance degrades due to the model’s inability to capture long-term volatility and external factors.
-
-## 2. Stock-Specific Challenges:
-- Stocks like NVIDIA and Coca-Cola exhibit higher volatility or long-term trend shifts, leading to higher RMSE percentages for their predictions.
-- Stable stocks like Johnson & Johnson show consistently lower RMSE, making them more suitable for the current model.
-
-## 3. Feature Engineering Improvements:
-- Incorporate additional features like macroeconomic indicators (e.g., interest rates) or sentiment analysis to improve long-term prediction accuracy.
-- Enhance the model to capture sudden price changes by integrating news-based events or other external signals.
-
-## 4. Model Adjustments:
-- For longer horizons, explore ensemble approaches combining SARIMA with deep learning models (e.g., LSTMs) to better handle sequential data and volatility.
-- Refine hyperparameters for specific stocks with higher volatility.
+**Analysis**:
+- For longer prediction horizons (1 month), the model struggles to capture the fluctuations in Coca-Cola's stock price, as reflected by the higher RMSE percentage.
+- Despite this, the "Strong Buy" recommendation suggests that the model identifies an overall positive trend in the stock.
+- Predicted prices show a smoother trajectory, failing to account for sudden drops or rebounds in the actual prices.
 
 ---
 
-### Overall:
-The model demonstrates strong predictive power for short-term horizons, particularly for stable stocks, but further improvements are necessary to handle long-term forecasts and volatile stock behaviors effectively.
+#### **4. JNJ (Johnson & Johnson)**
+- **Horizon**:
+   - **1 Day**: RMSE = 2.29, RMSE as % of Close Price Range = 8.60%, RMSE as % of Average Close Price = 1.49%.
+   - **1 Month**: RMSE = 6.69, RMSE as % of Close Price Range = 25.18%, RMSE as % of Average Close Price = 4.38%.
+- **Next Day Prediction (1 Day Horizon)**: $150.08 (Recommendation: Strong Buy)
+- **Next Day Prediction (1 Month Horizon)**: $149.11 (Recommendation: Strong Buy)
+
+**Analysis**:
+- The 1-day horizon prediction for JNJ is highly accurate, with a very low RMSE relative to its price range and average price.
+- For the 1-month horizon, the performance declines significantly, with RMSE increasing substantially, reflecting challenges in modeling long-term trends.
+- Both horizons recommend "Strong Buy," suggesting consistency in the model's ability to identify an upward trend in the stock.
 
 ---
 
+#### **5. NVDA (NVIDIA)**
+- **Horizon**: 1 Week
+- **RMSE**: 20.11
+- **RMSE as % of Close Price Range**: 15.94%
+- **RMSE as % of Average Close Price**: 27.00%
+- **Next Day Prediction**: $105.89 (Recommendation: Strong Buy)
+
+**Analysis**:
+- NVIDIA's high RMSE percentages indicate that the model struggles to accurately predict its stock price movements, likely due to its higher volatility and rapid market fluctuations.
+- The "Strong Buy" recommendation aligns with the predicted upward trend, but the model's limited ability to account for large deviations makes this prediction less reliable.
+- The significant difference between actual and predicted prices highlights the need for feature improvements or alternative models.
+
+---
+
+### 7.3 Insights and Possible Improvements
+1. **Short-Term vs. Long-Term Predictions**:
+   - The model performs well for short-term predictions (1 day) across all stocks, with low RMSE percentages indicating accurate predictions.
+   - For longer horizons (1 week, 1 month), performance degrades due to the model's inability to capture long-term volatility and external factors.
+
+2. **Stock-Specific Challenges**:
+   - Stocks like NVIDIA and Coca-Cola exhibit higher volatility or long-term trend shifts, leading to higher RMSE percentages for their predictions.
+   - Stable stocks like Johnson & Johnson show consistently lower RMSE, making them more suitable for the current model.
+
+3. **Feature Engineering Improvements**:
+   - Incorporate additional features like macroeconomic indicators (e.g., interest rates) or sentiment analysis to improve long-term prediction accuracy.
+   - Enhance the model to capture sudden price changes by integrating news-based events or other external signals.
+
+4. **Model Adjustments**:
+   - For longer horizons, explore ensemble approaches combining SARIMA with deep learning models (e.g., LSTMs) to better handle sequential data and volatility.
+   - Refine hyperparameters for specific stocks with higher volatility.
+
+---
 ## 8. Comparison of Midterm and Final Models
 
 The transition from the midterm to the final model marks a significant improvement in terms of data processing, feature engineering, model design, evaluation, and overall predictive performance. This section provides a detailed comparison of the two models and highlights the key improvements.
@@ -337,27 +371,3 @@ The hybrid architecture improved flexibility and performance, allowing the model
 1. **Stationarity**: Assumed SARIMA’s data could be differenced to achieve stationarity.
 2. **Feature Selection**: Chosen based on domain knowledge and statistical relevance.
 3. **Prediction Horizon**: Focused on short-term accuracy due to increased uncertainty in long-term forecasts.
-
----
-
-## 10. Improvements and Future Work
-1. **Feature Expansion**:
-   - Incorporate sentiment analysis from news and social media.
-   - Add macroeconomic variables (e.g., interest rates, GDP growth).
-2. **Advanced Models**:
-   - Explore RNNs and Transformers for sequential forecasting.
-3. **Real-Time Integration**:
-   - Deploy models in real-time trading systems for dynamic predictions.
-
----
-
-### Challenges
-Managing the model's Root Mean Squared Error (RMSE) was a primary challenge, as reducing RMSE would improve the model's reliability.
-
-### Potential Improvements
-1. **Feature Engineering**: Incorporate additional features, such as economic indicators or sentiment analysis from news headlines, to capture external factors affecting stock prices.
-2. **Hyperparameter Tuning**: Run extensive grid searches to optimize parameters, aiming to reduce RMSE and enhance prediction stability.
-
----
-
-By addressing these improvements, we hope to further increase the model's accuracy and robustness for stock price predictions.
