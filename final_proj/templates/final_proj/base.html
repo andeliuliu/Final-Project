@@ -17,11 +17,23 @@
             <a href="{% url 'home' %}" class="logo">Stock Predictor</a>
             <ul class="nav-links">
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'predict' %}">Predict</a></li>
-        
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    
+                {% if user.is_authenticated %}
+                <li>
+                    <form method="post" action="{% url 'logout' %}" class="logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Sign Out</button>
+                    </form>
+                </li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Sign In</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
+    
+    
 
     <main>
         {% block content %}{% endblock %}

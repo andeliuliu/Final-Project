@@ -8,6 +8,9 @@ body {
 }
 
 /* Navbar Styles */
+.logout-btn {
+    all: unset;
+}
 .navbar {
     background-color: #fff;
     border-bottom: 2px solid #ddd;
@@ -36,14 +39,18 @@ body {
     margin: 0;
 }
 
-.nav-links a {
-    text-decoration: none;
+.nav-links a, .logout-btn {
+    background: none;
+    border: none;
     color: #333;
+    font-size: 1rem;
     font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover, .logout-btn:hover {
     color: #e63946;
 }
 
@@ -64,6 +71,13 @@ button:hover, .back-button:hover {
     background-color: #b02a36;
 }
 
+.logout-btn:hover {
+    background-color: white;
+}
+
+.logout-btn {
+    margin: 0;
+}
 /* Main Content Styles */
 main {
     padding: 2rem;
@@ -134,8 +148,8 @@ canvas#priceChart {
     flex: 1 1 30%;
     padding: 1.5rem;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 -4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     text-align: left;
     margin-bottom: 20px;
 }
@@ -143,14 +157,30 @@ canvas#priceChart {
 .stat-card h2 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    text-align: center;
 }
 
-.stat-card p {
-    font-size: 1rem;
-    margin: 0.25rem 0;
+/* Table inside Stat Card */
+.stat-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
 
+.stat-card table td {
+    padding: 8px 10px;
+    border-top: 1px solid #ddd; 
+    vertical-align: top;
+    font-size: 0.95rem;
+}
 
+.stat-card table tr:first-child td {
+    border-top: none;
+}
+
+#stat {
+    text-align: right;
+}
 /* Responsive Design Adjustments */
 @media (max-width: 1024px) {
     .stat-card {
@@ -178,4 +208,49 @@ canvas#priceChart {
     .chart-section {
         flex-direction: column;
     }
+}
+
+/* Watchlist Button */
+.watchlist-btn {
+    background-color: #e63946;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.watchlist-btn:hover {
+    background-color: #b02a36;
+}
+
+/* Success Message Styling */
+.messages p.success {
+    color: green;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.messages p.info {
+    color: blue;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.messages p.error {
+    color: red;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.logout-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
 }
