@@ -15,6 +15,7 @@ datetime = "*"
 requests = "*"
 statsmodels = "*"
 keras = "*"
+pytest = "*"
 
 [dev-packages]
 
