@@ -5,6 +5,7 @@
     <title>Stock Price Analysis</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {% load static %}
+    {% load humanize %}
     <link rel="stylesheet" href="{% static 'finalproj-styles.css' %}">
 </head>
 <body>
@@ -13,7 +14,6 @@
     <div>
         <label for="horizon-select"><strong>Select Prediction Horizon:</strong></label>
         <select id="horizon-select" onchange="updatePrediction()">
-            <option value="" {% if not horizon %}selected{% endif %} disabled>Select horizon</option>
             <option value="1" {% if horizon == 1 %}selected{% endif %}>1 Day</option>
             <option value="5" {% if horizon == 5 %}selected{% endif %}>1 Week</option>
             <option value="20" {% if horizon == 20 %}selected{% endif %}>1 Month</option>
@@ -44,32 +44,69 @@
     </div>
 
     <!-- Statistic Cards Section -->
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
-        <!-- Next Day's Predicted Closing Price -->
-        <div class="stat-card" style="flex: 1 1 30%;">
-            <h2>Next Day's Predicted Closing Price</h2>
-            <p><strong>Predicted Closing Price for Next Trading Horizon:</strong> ${{ next_day_prediction|floatformat:2 }}</p>
-            <p><strong>Recommendation:</strong> {{ recommendation }}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
 
-        </div>
+    <!-- Next Day's Predicted Closing Price -->
+    <div class="stat-card">
+        <h2 style="text-align: center;">Next Day's Prediction</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td><strong>Predicted Closing Price:</strong></td>
+                <td id="stat">${{ next_day_prediction|floatformat:2|intcomma }}</td>
+            </tr>
+            <tr>
+                <td><strong>Recommendation:</strong></td>
+                <td id="stat">{{ recommendation }}</td>
+            </tr>
+        </table>
+    </div>
 
-        <!-- Model Evaluation -->
-        <div class="stat-card" style="flex: 1 1 30%;">
-            <h2>Model Evaluation</h2>
-            <p><strong>Root Mean Squared Error (RMSE):</strong> {{ rmse|floatformat:2 }}</p>
-            <p><strong>RMSE as % of Close Price Range:</strong> {{ rmse_range_percentage|floatformat:2 }}%</p>
-            <p><strong>RMSE as % of Average Close Price:</strong> {{ rmse_avg_percentage|floatformat:2 }}%</p>
+    <!-- Model Evaluation -->
+    <div class="stat-card">
+        <h2 style="text-align: center;">Model Evaluation</h2>
+        <table>
+            <tr>
+                <td><strong>Root Mean Squared Error (RMSE):</strong></td>
+                <td id="stat">{{ rmse|floatformat:2|intcomma }}</td>
+            </tr>
+            <tr>
+                <td><strong>RMSE as % of Close Price Range:</strong></td>
+                <td id="stat">{{ rmse_range_percentage|floatformat:2 |intcomma}}%</td>
+            </tr>
+            <tr>
+                <td><strong>RMSE as % of Average Close Price:</strong></td>
+                <td id="stat">{{ rmse_avg_percentage|floatformat:2|intcomma }}%</td>
+            </tr>
+        </table>
         </div>
 
         <!-- Stock Statistics -->
-        <div class="stat-card" style="flex: 1 1 30%;">
-            <h2>Stock Statistics</h2>
-            <p><strong>Current Price:</strong> ${{ current_price|floatformat:2 }}</p>
-            <p><strong>Market Cap:</strong> ${{ market_cap|floatformat:2 }}</p>
-            <p><strong>Price Target:</strong> ${{ price_target|floatformat:2 }}</p>
-            <p><strong>Upside/Downside:</strong> {{ upside_downside|floatformat:2 }}%</p>
+        <div class="stat-card">
+            <h2 style="text-align: center;">Stock Statistics</h2>
+            <table style="width: 100%;">
+                <tr>
+                    <td><strong>Current Price:</strong></td>
+                    <td id="stat">${{ current_price|floatformat:2|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Market Cap:</strong></td>
+                    <td id="stat">${{ market_cap|floatformat:2|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Price Target:</strong></td>
+                    <td id="stat">${{ price_target|floatformat:2|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Upside/Downside:</strong></td>
+                    <td id="stat" style="color: {% if upside_downside > 0 %}green{% elif upside_downside < 0 %}red{% else %}black{% endif %};">
+                        {{ upside_downside|floatformat:2|intcomma }}%
+                    </td>                
+                </tr>
+            </table>
         </div>
+
     </div>
+
 
     <div style="margin-bottom: 20px;">
         <a href="{% url 'home' %}" class="back-button">Predict Another Stock</a>

@@ -11,7 +11,7 @@ def predict_view(request):
             horizon = int(horizon)
 
         try:
-            context = predict_stock_price(symbol, 'Close', horizon or 1)
+            context = predict_stock_price(symbol, 'Close', horizon)
             context['symbol'] = symbol
             context['horizon'] = horizon
 
