@@ -1,0 +1,25 @@
+{% extends 'final_proj/base.html' %}
+
+{% block content %}
+<h2>Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+<h3>Your Watchlist</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for stock in watchlist %}
+    <div class="stat-card">
+        <h3>{{ stock.symbol }}</h3>
+        <p><strong>Recommendation:</strong> {{ stock.recommendation }}</p>
+        <p>
+            <strong>Upside/Downside:</strong>
+            <span style="color: {% if stock.upside_downside > 0 %}green{% else %}red{% endif %};">
+                {{ stock.upside_downside|floatformat:2 }}%
+            </span>
+        </p>
+        <p><strong>Current Price:</strong> ${{ stock.current_price|floatformat:2 }}</p>
+    </div>
+    {% empty %}
+    <p>You have no stocks in your watchlist.</p>
+    {% endfor %}
+</div>
+{% endblock %}

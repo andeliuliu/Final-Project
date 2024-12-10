@@ -8,6 +8,9 @@ body {
 }
 
 /* Navbar Styles */
+.logout-btn {
+    all: unset;
+}
 .navbar {
     background-color: #fff;
     border-bottom: 2px solid #ddd;
@@ -36,14 +39,18 @@ body {
     margin: 0;
 }
 
-.nav-links a {
-    text-decoration: none;
+.nav-links a, .logout-btn {
+    background: none;
+    border: none;
     color: #333;
+    font-size: 1rem;
     font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover, .logout-btn:hover {
     color: #e63946;
 }
 
@@ -64,6 +71,13 @@ button:hover, .back-button:hover {
     background-color: #b02a36;
 }
 
+.logout-btn:hover {
+    background-color: white;
+}
+
+.logout-btn {
+    margin: 0;
+}
 /* Main Content Styles */
 main {
     padding: 2rem;
@@ -194,4 +208,49 @@ canvas#priceChart {
     .chart-section {
         flex-direction: column;
     }
+}
+
+/* Watchlist Button */
+.watchlist-btn {
+    background-color: #e63946;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.watchlist-btn:hover {
+    background-color: #b02a36;
+}
+
+/* Success Message Styling */
+.messages p.success {
+    color: green;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.messages p.info {
+    color: blue;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.messages p.error {
+    color: red;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.logout-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
 }

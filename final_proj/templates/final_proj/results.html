@@ -43,6 +43,15 @@
         <canvas id="priceChart" width="1000" height="500"></canvas>
     </div>
 
+    <form method="post" action="{% url 'add_to_watchlist' %}">
+        {% csrf_token %}
+        <input type="hidden" name="symbol" value="{{ symbol }}">
+        <input type="hidden" name="current_price" value="{{ current_price }}">
+        <input type="hidden" name="upside_downside" value="{{ upside_downside }}">
+        <input type="hidden" name="recommendation" value="{{ recommendation }}">
+        <button type="submit" class="watchlist-btn">Add to Watchlist</button>
+    </form>
+
     <!-- Statistic Cards Section -->
 <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
 

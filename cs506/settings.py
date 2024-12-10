@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = 'dashboard'   # Redirect after login
+LOGOUT_REDIRECT_URL = 'login'      # Redirect after logout
 
 # Application definition
 
@@ -39,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
     'final_proj'
 ]
 
@@ -51,8 +54,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'django.contrib.messages.middleware.MessageMiddleware',
 
+]
+# Configure Default Messages
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'success',
+    messages.INFO: 'info',
+    messages.ERROR: 'error',
+}
 ROOT_URLCONF = 'cs506.urls'
 
 TEMPLATES = [
