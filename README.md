@@ -195,6 +195,7 @@ The models were combined to leverage their complementary strengths:
 ### 7.2 Stock-Specific Analysis
 
 #### **1. AAPL (Apple)**
+#### 1-Day Horizon
 ![Stock Price Analysis for AAPL](./images/Screenshot%202024-12-10%20at%2012.06.10%E2%80%AFPM.png)
 - **Horizon**: 1 Day
 - **RMSE**: 6.50
@@ -210,6 +211,11 @@ The models were combined to leverage their complementary strengths:
 ---
 
 #### **2. MSFT (Microsoft)**
+#### 1-Day Horizon
+![Stock Price Analysis for MSFT (1-Day Horizon)](./images/Screenshot%202024-12-10%20at%2012.06.37%E2%80%AFPM.png)
+
+#### 1-Week Horizon
+![Stock Price Analysis for MSFT (1-Week Horizon)](./images/Screenshot%202024-12-10%20at%2012.08.08%E2%80%AFPM.png)
 - **Horizon**:
    - **1 Day**: RMSE = 7.06, RMSE as % of Close Price Range = 3.17%, RMSE as % of Average Close Price = 1.90%.
    - **1 Week**: RMSE = 9.91, RMSE as % of Close Price Range = 4.45%, RMSE as % of Average Close Price = 2.67%.
@@ -224,6 +230,8 @@ The models were combined to leverage their complementary strengths:
 ---
 
 #### **3. KO (Coca-Cola)**
+#### 1-Month Horizon
+![Stock Price Analysis for KO (1-Month Horizon)](./images/Screenshot%202024-12-10%20at%2012.07.56%E2%80%AFPM.png)
 - **Horizon**: 1 Month
 - **RMSE**: 3.20
 - **RMSE as % of Close Price Range**: 14.84%
@@ -238,6 +246,11 @@ The models were combined to leverage their complementary strengths:
 ---
 
 #### **4. JNJ (Johnson & Johnson)**
+#### 1-Day Horizon
+![Stock Price Analysis for JNJ (1-Day Horizon)](./images/Screenshot%202024-12-10%20at%2012.06.26%E2%80%AFPM.png)
+
+#### 1-Month Horizon
+![Stock Price Analysis for JNJ (1-Month Horizon)](./images/Screenshot%202024-12-10%20at%2012.08.20%E2%80%AFPM.png)
 - **Horizon**:
    - **1 Day**: RMSE = 2.29, RMSE as % of Close Price Range = 8.60%, RMSE as % of Average Close Price = 1.49%.
    - **1 Month**: RMSE = 6.69, RMSE as % of Close Price Range = 25.18%, RMSE as % of Average Close Price = 4.38%.
@@ -252,6 +265,8 @@ The models were combined to leverage their complementary strengths:
 ---
 
 #### **5. NVDA (NVIDIA)**
+#### 1-Week Horizon
+![Stock Price Analysis for NVDA (1-Week Horizon)](./images/Screenshot%202024-12-10%20at%2012.07.19%E2%80%AFPM.png)
 - **Horizon**: 1 Week
 - **RMSE**: 20.11
 - **RMSE as % of Close Price Range**: 15.94%
