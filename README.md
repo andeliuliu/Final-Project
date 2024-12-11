@@ -387,3 +387,41 @@ The hybrid architecture improved flexibility and performance, allowing the model
 1. **Stationarity**: Assumed SARIMA’s data could be differenced to achieve stationarity.
 2. **Feature Selection**: Chosen based on domain knowledge and statistical relevance.
 3. **Prediction Horizon**: Focused on short-term accuracy due to increased uncertainty in long-term forecasts.
+
+## 10. Conclusion
+
+### 10.1 Conclusion
+The stock price prediction model, incorporating XGBoost and SARIMA, demonstrates strong predictive accuracy for short-term horizons (1 day), particularly for stable stocks like AAPL and JNJ. However, as the prediction horizon extends to 1 week or 1 month, the model faces increasing challenges due to:
+- **Market Volatility**: Stocks like NVDA and KO, which exhibit higher price fluctuations, result in higher RMSE and less reliable recommendations.
+- **Model Smoothing**: The XGBoost model’s smoothed predictions fail to account for sudden spikes or drops in stock prices influenced by external market factors.
+
+#### 10.2 Supporting Evidence
+1. **RMSE Metrics**: Across 1-day horizons, RMSE remains low (e.g., 2.29 for JNJ, 6.50 for AAPL), demonstrating the model’s strength in short-term predictions.
+2. **Recommendation Accuracy**: Practical recommendations such as "Strong Buy" or "Hold" align with the actual price trends, especially for AAPL, MSFT, and JNJ.
+3. **Graphical Evidence**: Visual comparisons of actual vs. predicted prices (e.g., MSFT and AAPL 1-day predictions) show minimal deviation, supporting the model’s reliability for short-term forecasting.
+
+---
+
+### 10.3 Key Insights
+1. **Short-Term Superiority**: The model excels in predicting short-term (1-day) movements due to its ability to capture immediate trends and non-linear interactions between features.
+2. **Volatility Challenges**: Higher RMSE values for stocks like NVDA and KO highlight the model’s inability to handle volatile stocks effectively.
+3. **Long-Term Limitations**: For 1-week and 1-month horizons, the model fails to adapt to rapid fluctuations and external factors, resulting in higher error rates.
+
+---
+
+### 10.4 Recommendations for Improvement
+1. **Enhanced Feature Engineering**:
+   - Include external market factors such as news sentiment, macroeconomic indicators (e.g., interest rates, GDP growth), and geopolitical events.
+   - Add lagged features for capturing temporal dependencies more effectively over longer horizons.
+
+2. **Model Upgrades**:
+   - Implement ensemble methods combining SARIMA with advanced sequential models like LSTMs to improve performance for medium- and long-term horizons.
+   - Incorporate Transformer-based architectures for more robust trend forecasting.
+
+3. **Horizon-Specific Models**:
+   - Train separate models optimized for different prediction horizons (e.g., short-term vs. long-term) to better address varying levels of volatility and trend complexity.
+
+---
+
+### 10.5 Final Verdict
+The current model is highly effective for short-term predictions and provides valuable insights for investors and traders looking for daily price movements and actionable recommendations. However, to address medium- and long-term forecasting challenges, future iterations must incorporate additional features, external signals, and more advanced modeling techniques. By addressing these improvements, the model can evolve into a robust, versatile tool for predicting stock prices across diverse horizons and market conditions.
