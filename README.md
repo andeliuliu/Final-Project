@@ -1,4 +1,4 @@
-# Stock Price Prediction Model Midterm Report
+# Stock Price Prediction Model Final Report
 
 ## Presentation Link
 [View the report on Google Slides with visualizations of data](https://docs.google.com/presentation/d/1ldVlhIxLv9Ws7QH0tb8xTBQSvn2ezauIiC9Rqwx9vVc/edit#slide=id.g3122b41325a_0_88)
