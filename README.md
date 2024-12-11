@@ -195,7 +195,7 @@ The models were combined to leverage their complementary strengths:
 ### 7.2 Stock-Specific Analysis
 
 #### **1. AAPL (Apple)**
-![Stock Price for AAPL](./images/Screenshot 2024-12-10 at 12.06.10 PM.png)
+![Stock Price Analysis for AAPL](./images/Screenshot%202024-12-10%20at%2012.06.10%E2%80%AFPM.png)
 - **Horizon**: 1 Day
 - **RMSE**: 6.50
 - **RMSE as % of Close Price Range**: 6.32%
